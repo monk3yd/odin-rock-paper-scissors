@@ -88,7 +88,6 @@ buttons.forEach((button) => {
                 paraMessage.textContent = `Game Over! Computer wins with a score of ${computerScore}.`;
             };
             scoreContainer.appendChild(paraMessage);
-            return;
         }
     });
 });
