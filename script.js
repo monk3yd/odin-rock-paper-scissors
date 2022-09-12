@@ -11,7 +11,7 @@ const paraScore = document.createElement("p");
 // Computers turn
 function computerPlay() {
     // Array of possible NPC plays
-    let playsPossible = ["Rock", "Paper", "Scissor"];
+    let playsPossible = ["Rock", "Paper", "Scissors"];
 
     // Get random number between 0 and 2 inclusive
     const random = Math.floor(Math.random() * playsPossible.length);
@@ -43,7 +43,7 @@ function startRound(playerChoice, computerPlay) {
     if (playerChoice === computerChoice) {
         // Draw
         return 0;
-    } else if (playerChoice === "rock" && computerChoice === "scissor"  || playerChoice === "paper" && computerChoice === "rock" || playerChoice === "scissor" && computerChoice === "paper") {
+    } else if (playerChoice === "rock" && computerChoice === "scissors"  || playerChoice === "paper" && computerChoice === "rock" || playerChoice === "scissors" && computerChoice === "paper") {
         // Player win
         return 1;
         // console.log(`Player wins round ${i + 1}`);
@@ -52,20 +52,6 @@ function startRound(playerChoice, computerPlay) {
         return 2;
         // console.log(`Computer wins round ${i + 1}`);
     };
-};
-
-function calcScore(roundWinner, playerScore, computerScore) {
-    if (roundWinner === 1) {
-        playerScore++;
-    } else if (roundWinner === 2) {
-        computerScore++;
-    } else {
-        return "Draw.";
-    }
-    paraScore.textContent = ``;
-    paraScore.textContent = `Player Score: ${playerScore} - Computer Score: ${computerScore}`;
-    scoreContainer.appendChild(paraScore);
-    return [playerScore, computerScore];
 };
 
 function checkEndGame(roundCounter) {
@@ -92,9 +78,16 @@ buttons.forEach((button) => {
     button.addEventListener('click', (e) => {
         let choice = e.target.innerText;
         let roundWinner = startRound(choice, computerPlay);
-        let scores = calcScore(roundWinner, playerScore, computerScore);
-        playerScore = scores[0];
-        computerScore = scores[1];
+
+        if (roundWinner === 1) {
+            playerScore++;
+        } else if (roundWinner === 2) {
+            computerScore++;
+        }
+        paraScore.textContent = ``;
+        paraScore.textContent = `Player Score: ${playerScore} - Computer Score: ${computerScore}`;
+        scoreContainer.appendChild(paraScore);
+
         roundCounter++;
         checkEndGame(roundCounter);
     });
