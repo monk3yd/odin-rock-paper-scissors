@@ -7,6 +7,7 @@ const paraComputerResult = document.createElement("p");
 // Score
 const scoreContainer = document.querySelector("#score-container");
 const paraScore = document.createElement("p");
+const paraMessage = document.createElement("p");
 
 // Computers turn
 function computerPlay() {
@@ -54,23 +55,12 @@ function startRound(playerChoice, computerPlay) {
     };
 };
 
-function checkEndGame(roundCounter) {
-    if (roundCounter > 5) {
-        // Announce winnner
-        if (playerScore > computerScore) {
-            console.log(`Player wins with a score of ${playerScore}/5`);
-        } else {
-            console.log(`Computer wins with a score of ${computerScore}/5`);
-        };
-    }
+function checkWinner(playerScore, computerScore) {
 };
 
 // Counter score variables
 let playerScore = 0;
 let computerScore = 0;
-
-// Round counter variable
-let roundCounter = 0;
 
 // Attach events to buttons
 const buttons = document.querySelectorAll("button");
@@ -79,6 +69,7 @@ buttons.forEach((button) => {
         let choice = e.target.innerText;
         let roundWinner = startRound(choice, computerPlay);
 
+        // Score
         if (roundWinner === 1) {
             playerScore++;
         } else if (roundWinner === 2) {
@@ -88,10 +79,16 @@ buttons.forEach((button) => {
         paraScore.textContent = `Player Score: ${playerScore} - Computer Score: ${computerScore}`;
         scoreContainer.appendChild(paraScore);
 
-        roundCounter++;
-        checkEndGame(roundCounter);
+        // Check for game over
+        if (playerScore >= 5 || computerScore >= 5) {
+            // Announce winnner
+            if (playerScore > computerScore) {
+                paraMessage.textContent = `Game Over! Player wins with a score of ${playerScore}.`;
+            } else {
+                paraMessage.textContent = `Game Over! Computer wins with a score of ${computerScore}.`;
+            };
+            scoreContainer.appendChild(paraMessage);
+            return;
+        }
     });
 });
-
-// Play 5 rounds
-console.log(`Round: ${roundCounter}`);
